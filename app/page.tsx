@@ -8,6 +8,7 @@ import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 export default function Home() {
   const [user, setUser] = useState<any>(null);
   const [showTerms, setShowTerms] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -134,6 +135,107 @@ export default function Home() {
         )}
     </div>
 
+          {/* プライバシーポリシー 折りたたみボックス */}
+      <div className="mt-8 w-full max-w-3xl text-left">
+        <button
+          onClick={() => setShowPrivacy(!showPrivacy)}
+          className="text-blue-700 underline mb-2"
+        >
+          {showPrivacy ? "▲ プライバシーポリシーを閉じる" : "▼ プライバシーポリシーを表示"}
+        </button>
+
+        {showPrivacy && (
+          <div className="border rounded p-4 max-h-96 overflow-y-scroll bg-white text-sm whitespace-pre-wrap leading-relaxed shadow">
+{`プライバシーポリシー（β版）
+
+「英雄の尺度キャラクターシート保管庫」（以下、「本サービス」）では、利用者のプライバシーを尊重し、個人情報の保護に最大限の注意を払っています。以下に、本サービスにおける個人情報の取扱いについて定めます。
+
+第1条（取得する情報）
+本サービスは、以下の情報を取得します：
+- Googleアカウントの「ユーザーID」
+- Googleアカウントの「表示名」
+これらは、Firebase Authenticationを用いたログイン時に自動的に取得されます。
+
+第2条（利用目的）
+取得した情報は、以下の目的に限り使用します：
+- 利用者の識別および認証
+- キャラクターシートの保存・管理・閲覧機能の提供
+- サービスの円滑な運営および保守管理
+
+第3条（情報の管理）
+取得した情報は、Googleが提供するFirebaseプラットフォーム上で安全に管理され、以下のような対策により保護されます：
+- 通信の暗号化（HTTPS）
+- Firebase Authenticationによる認証管理
+- 管理者のアクセス制限
+
+第4条（第三者提供）
+本サービスは、以下の場合を除き、取得した情報を第三者に提供することはありません：
+1. 利用者本人の同意がある場合
+2. 法令に基づき開示が必要な場合
+
+第5条（外部サービスの利用）
+本サービスは、Googleが提供するFirebaseを利用しています。Firebaseにおける個人情報の取り扱いについては、以下のプライバシーポリシーを参照してください：
+https://firebase.google.com/support/privacy
+
+第6条（情報の削除・開示請求）
+利用者が自身の情報の削除・開示などを希望する場合は、下記のお問い合わせフォームよりご連絡ください。本人確認の上、適切に対応いたします。
+お問い合わせフォーム：https://docs.google.com/forms/d/e/1FAIpQLSfx9zhLI9ymFnSTGEpIPavCZYnltL0uM5BrXozMnXEAYfzOsg/viewform?usp=header
+
+第7条（改訂）
+本ポリシーの内容は、法令の改正やサービス内容の変更に応じて、予告なく改訂されることがあります。重要な変更がある場合は、サービス上でお知らせいたします。
+
+第8条（お問い合わせ）
+プライバシーポリシーに関するご質問・ご意見がある場合は、以下のフォームよりご連絡ください：
+お問い合わせフォーム：https://docs.google.com/forms/d/e/1FAIpQLSfx9zhLI9ymFnSTGEpIPavCZYnltL0uM5BrXozMnXEAYfzOsg/viewform?usp=header
+
+施行日：2025年7月24日`}
+          </div>
+        )}
+
+<div className="bg-grey-100 text-black py-10 px-4">
+  <h2 className="text-center text-2xl font-bold mb-6">各種リンク</h2>
+  <div className="flex flex-col md:flex-row justify-center items-center gap-6 max-w-4xl mx-auto">
+    
+    {/* Xボタン */}
+    <Link href="https://x.com/Surugamo_TRPG" target="_blank" className="w-60">
+      <div className="bg-black text-white rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col items-center">
+        <img src="/x-logo.png" alt="X" className="w-16 h-16 object-contain mb-2" />
+        <h3 className="font-semibold text-lg mb-1">X</h3>
+        <p className="text-sm text-center">
+          アップデート内容やお問合せはこちらからも可能です。
+        </p>
+      </div>
+    </Link>
+
+    {/* FANBOX */}
+    <Link href="https://suruga-trpg.fanbox.cc/" target="_blank" className="w-60">
+      <div className="bg-white text-black rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col items-center">
+        <img src="/fanbox-logo.png" alt="FANBOX" className="w-16 h-16 object-contain mb-2" />
+        <h3 className="font-semibold text-lg mb-1">開発支援（FANBOX）</h3>
+        <p className="text-sm text-center">
+          開発・維持管理の支援をしていただける方を募集しています。
+        </p>
+      </div>
+    </Link>
+
+    {/* お問い合わせ */}
+    <Link
+      href="https://docs.google.com/forms/d/e/1FAIpQLSfx9zhLI9ymFnSTGEpIPavCZYnltL0uM5BrXozMnXEAYfzOsg/viewform?usp=header"
+      target="_blank"
+      className="w-60"
+    >
+      <div className="bg-white text-black rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col items-center">
+        <img src="/contact-icon.png" alt="お問い合わせ" className="w-16 h-16 object-contain mb-2" />
+        <h3 className="font-semibold text-lg mb-1">お問い合わせ</h3>
+        <p className="text-sm text-center">
+          不具合・ご要望などはこちらからお送りください。
+        </p>
+      </div>
+    </Link>
+
+  </div>
+</div>
+      </div>
     </main>
   );
 }

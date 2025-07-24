@@ -43,7 +43,15 @@ export default function MyPage() {
 
   return (
     <main className="p-8 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">マイキャラクター一覧</h1>
+    <div className="flex items-center justify-between mb-4">
+      <h1 className="text-2xl font-bold">マイキャラクター一覧</h1>
+      <button
+        onClick={() => router.push("/")}
+        className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+      >
+        ホームへ戻る
+      </button>
+    </div>
 
       {sheets.length === 0 ? (
         <p className="text-gray-600">まだキャラクターが登録されていません。</p>
