@@ -18,7 +18,7 @@ export default function MyPage() {
     const unsub = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       if (user) {
-        const q = query(collection(db, "characters"), where("uid", "==", user.uid));
+        const q = query(collection(db, "characters"), where("userId", "==", user.uid));
         const snap = await getDocs(q);
         const results = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
         setSheets(results);
@@ -51,8 +51,12 @@ export default function MyPage() {
         <ul className="space-y-4">
         {sheets.map((sheet) => (
             <li key={sheet.id} className="p-4 bg-white shadow rounded flex justify-between items-center">
-            <span className="font-semibold">{sheet.name || "名前未設定"}</span>
-
+            <span className="font-semibold">
+                {sheet.name || "名前未設定"}　
+                {sheet.form?.fate && sheet.form?.origin && (
+                  <span className="text-gray-600 text-sm">{sheet.form.fate}の{sheet.form.origin}</span>
+                )}
+              </span>
             <div className="flex gap-2">
                 <button
                 className="bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700"

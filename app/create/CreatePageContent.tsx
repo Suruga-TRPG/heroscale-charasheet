@@ -223,7 +223,7 @@ const saveCharacterSheet = async () => {
     selectedItems,
     totalStats,
     remainingExp,
-    uid,
+    userId: user.uid,
     createdAt: Timestamp.now()
   };
   
