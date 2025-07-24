@@ -15,7 +15,7 @@ export default function CharacterDisplay({ character }: { character: any }) {
         <p></p>
         <div className="text-xl"><strong>性別</strong>：{character.form?.gender || "（未記入）"}</div>
         <div className="text-xl"><strong>年齢</strong>：{character.form?.age || "（未記入）"}</div>
-        <div className={character.remainingExp < 0 ? "text-red-600" : "text-xl"}>
+        <div className={character.remainingExp < 0 ? "text-red-600 text-xl" : "text-xl"}>
         経験点：{character.remainingExp ?? "―"} / {character.form?.exp ?? "―"}
         </div>
         <div className="text-xl"><strong>出自</strong>：{character.form?.origin || "（未記入）"}</div>
