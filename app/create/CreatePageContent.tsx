@@ -162,7 +162,7 @@ const [selectedCodename, setSelectedCodename] = useState("未選択");          
       "奇跡の靴":     { power: 0, range: 0, area: 0, mobility: 1, durability: 500, reaction: 0 },
       "伝説の指輪":   { power: 0, range: 0, area: 0, mobility: 0, durability: 1500, reaction: 0 },
       "類稀な外套":   { power: 0, range: 0, area: 1, mobility: 0, durability: 1000, reaction: 0 },
-      "至高の箒":     { power: 0, range: 0, area: 0, mobility: 0, durability: 500, reaction: 1 },
+      "至高の帯":     { power: 0, range: 0, area: 0, mobility: 0, durability: 500, reaction: 1 },
       "魔導の書":     { power: 0, range: 1, area: 0, mobility: 0, durability: 500, reaction: 0 },
       "超常の仮面":   { power: 0, range: 0, area: 1, mobility: 1, durability: 0, reaction: 0 },
       "幻の櫛":       { power: 1, range: 0, area: 0, mobility: 0, durability: 0, reaction: 1 },
