@@ -6,7 +6,7 @@ import { doc, getDoc, setDoc, collection, addDoc, Timestamp } from "firebase/fir
 import { db } from "@/firebase";
 import { auth } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-
+import Sidebar from "@/components/Sidebar";
 
 export default function CreatePageContent() {
   const router = useRouter();
@@ -748,53 +748,24 @@ const handleGenerateTokenAndCopy = () => {
 
   console.log("CreatePage rendered!");
   return (
-    <div className="flex min-h-screen bg-white text-gray-800">
-
   <div className="flex min-h-screen bg-white text-gray-800">
     {/* サイドバー */}
-    <aside className="w-64 p-4 bg-gray-100 sticky top-0 h-screen flex flex-col gap-4">
-      <button onClick={() => router.push("/")} className="px-4 py-2 bg-gray-500 text-white rounded">ホームに戻る</button>
-
-      <button
-        onClick={() => router.push("/mypage")}
-        className="px-4 py-2 bg-gray-500 text-white rounded"
-      >
-        マイページへ
-      </button>
-      
-      <button
-        className="bg-green-500 text-white px-3 py-2 rounded"
-        onClick={() => {
-          const title = prompt("新しいメモのタイトルを入力してください");
-          if (title) {
-            setForm({
-              ...form,
-              memos: [...form.memos, { title, content: "" }]
-            });
-          }
-        }}
-      >
-        メモを追加
-      </button>
-      <button
-        onClick={saveCharacterSheet}
-        className="bg-blue-600 text-white font-bold px-4 py-2 rounded hover:bg-blue-700"
-      >
-        キャラクターを保存する
-      </button>
-      <button
-        onClick={handleGenerateTokenAndCopy}
-        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mt-2"
-      >
-        CCFOLIA駒出力
-      </button>
-
-      <p className="text-center text-sm text-gray-600 mb-4">
-        ログイン中: {user?.displayName || user?.email || "ゲストユーザー"}
-      </p>
-
-    </aside>
-
+    <div className="flex">
+    <Sidebar
+      user={user}
+      onSave={saveCharacterSheet}
+      onExport={handleGenerateTokenAndCopy}
+      onAddMemo={() => {
+        const title = prompt("新しいメモのタイトルを入力してください");
+        if (title) {
+          setForm({
+            ...form,
+            memos: [...form.memos, { title, content: "" }],
+          });
+        }
+      }}
+    />
+    
         {/* メインコンテンツ */}
     <main className="flex-1 p-8 overflow-auto">
           <h1 className="text-3xl font-bold mb-6 text-center">英雄の尺度　キャラクターシート</h1>
