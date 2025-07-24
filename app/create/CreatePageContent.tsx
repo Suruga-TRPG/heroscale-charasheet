@@ -224,27 +224,28 @@ const saveCharacterSheet = async () => {
     totalStats,
     remainingExp,
     userId: user.uid,
+    updatedAt: Timestamp.now(),
     createdAt: Timestamp.now()
   };
   
 
- try {
-    if (characterId) {
-      // 編集モード → setDocで上書き
-      await setDoc(doc(db, "characters", characterId), characterData);
-      router.push(`/character/${characterId}`);
-    } else {
-      // 新規作成モード
-      const docRef = await addDoc(collection(db, "characters"), {
-        ...characterData,
-        createdAt: Timestamp.now()
-      });
-      router.push(`/character/${docRef.id}`);
+    try {
+      if (characterId) {
+        // 編集モード
+        await setDoc(doc(db, "characters", characterId), characterData, { merge: true });
+        router.push(`/character/${characterId}`);
+      } else {
+        // 新規作成モード
+        const docRef = await addDoc(collection(db, "characters"), {
+          ...characterData,
+          createdAt: Timestamp.now(),  // ✅ 新規作成時のみ追加
+        });
+        router.push(`/character/${docRef.id}`);
+      }
+    } catch (error) {
+      console.error("キャラシートの保存に失敗:", error);
+      alert("保存に失敗しました。もう一度お試しください。");
     }
-  } catch (error) {
-    console.error("キャラシートの保存に失敗:", error);
-    alert("保存に失敗しました。もう一度お試しください。");
-  }
 };
 
 const remainingExp = useMemo(() => {

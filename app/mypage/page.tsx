@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, orderBy, updateDoc, Timestamp} from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -18,10 +18,33 @@ export default function MyPage() {
     const unsub = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       if (user) {
-        const q = query(collection(db, "characters"), where("userId", "==", user.uid));
-        const snap = await getDocs(q);
-        const results = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        setSheets(results);
+        const baseQuery = query(
+          collection(db, "characters"),
+          where("userId", "==", user.uid)
+        );
+        const snap = await getDocs(baseQuery);
+
+        const withFix: any[] = [];
+
+        // updatedAtが無いデータに現在時刻を追加して保存
+        for (const d of snap.docs) {
+          const data = d.data();
+          if (!data.updatedAt) {
+            await updateDoc(doc(db, "characters", d.id), {
+              updatedAt: Timestamp.now(),
+            });
+            data.updatedAt = Timestamp.now(); // 画面にも反映させる
+          }
+          withFix.push({ id: d.id, ...data });
+        }
+
+        // 更新順に並び替え（降順）
+        withFix.sort(
+          (a, b) =>
+            b.updatedAt?.seconds - a.updatedAt?.seconds
+        );
+
+        setSheets(withFix);
       }
       setLoading(false);
     });
