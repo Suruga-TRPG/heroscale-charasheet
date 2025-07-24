@@ -748,10 +748,9 @@ const handleGenerateTokenAndCopy = () => {
 
 
   console.log("CreatePage rendered!");
-  return (
+return (
   <div className="flex min-h-screen bg-white text-gray-800">
     {/* サイドバー */}
-    <div className="flex">
     <Sidebar
       user={user}
       onSave={saveCharacterSheet}
@@ -767,22 +766,24 @@ const handleGenerateTokenAndCopy = () => {
       }}
     />
     
-        {/* メインコンテンツ */}
-    <main className="flex-1 p-8 overflow-auto">
-          <h1 className="text-3xl font-bold mb-6 text-center">英雄の尺度　キャラクターシート</h1>
-      <div className="max-w-3xl mx-auto space-y-4">
+    {/* メインコンテンツ */}
+    <main className="flex-1 flex justify-center min-h-screen p-6 overflow-auto bg-white">
+      <div className="w-full max-w-3xl">
+        <h1 className="text-3xl font-bold mb-6 text-center">英雄の尺度　キャラクターシート</h1>
+
+        <div className="space-y-4">
         {/* 基本情報 */}
         <div className="grid grid-cols-3 gap-4">
-          <input name="name" value={form.name} onChange={handleChange} placeholder="PC名" className="p-2 border rounded" />
-          <input name="gender" value={form.gender} onChange={handleChange} placeholder="性別" className="p-2 border rounded" />
-          <input name="age" value={form.age} onChange={handleChange} placeholder="年齢" className="p-2 border rounded" />
+          <input name="name" value={form.name} onChange={handleChange} placeholder="PC名" className="w-full p-2 border rounded" />
+          <input name="gender" value={form.gender} onChange={handleChange} placeholder="性別" className="w-full p-2 border rounded" />
+          <input name="age" value={form.age} onChange={handleChange} placeholder="年齢" className="w-full p-2 border rounded" />
         </div>
 
         {/* 経験点 */}
         <label className="block mb-2 font-bold">経験点</label>
         <input
           type="number"
-          className="border rounded px-2 py-1 mb-2"
+          className="w-full border rounded px-2 py-1 mb-2"
           value={form.exp}
           onChange={(e) => setForm({ ...form, exp: parseInt(e.target.value || "0") })}
         />
@@ -828,99 +829,98 @@ const handleGenerateTokenAndCopy = () => {
         </div>
 
         {/* 職種・武器・装飾 */}
-<div className="grid grid-cols-3 gap-4">
-  <div>
-<label className="block mb-2 font-bold">職種</label>
-<select
-  className="border rounded px-2 py-1 mb-4"
-  value={selectedJob}
-  onChange={(e) => setSelectedJob(e.target.value as keyof typeof JOB_BONUSES | "未選択")}
->
-  <option value="未選択">選択してください</option>
-  {Object.keys(JOB_BONUSES).map((job) => (
-    <option key={job} value={job}>
-      {job}
-    </option>
-  ))}
-</select>
+        <div className="grid grid-cols-3 gap-4">
+          <div>
+            <label className="block mb-2 font-bold">職種</label>
+            <select
+              className="w-full border rounded px-2 py-1 mb-4"
+              value={selectedJob}
+              onChange={(e) => setSelectedJob(e.target.value as keyof typeof JOB_BONUSES | "未選択")}
+            >
+              <option value="未選択">選択してください</option>
+              {Object.keys(JOB_BONUSES).map((job) => (
+                <option key={job} value={job}>
+                  {job}
+                </option>
+              ))}
+            </select>
+          </div>
 
-  </div>
+          <div>
+            <label className="w-full block mb-2 font-bold">武器</label>
+            <select
+              className="w-full border rounded px-2 py-1 mb-4"
+              value={selectedWeapon}
+              onChange={(e) => setSelectedWeapon(e.target.value as keyof typeof WEAPON_BONUSES | "未選択")}
+            >
+              <option value="未選択">選択してください</option>
+              {Object.keys(WEAPON_BONUSES).map((weapon) => (
+                <option key={weapon} value={weapon}>
+                  {weapon}
+                </option>
+              ))}
+            </select>
+          </div>
 
-  <div>
-    <label className="block mb-2 font-bold">武器</label>
-<select
-  className="border rounded px-2 py-1 mb-4"
-  value={selectedWeapon}
-  onChange={(e) => setSelectedWeapon(e.target.value as keyof typeof WEAPON_BONUSES | "未選択")}
->
-  <option value="未選択">選択してください</option>
-  {Object.keys(WEAPON_BONUSES).map((weapon) => (
-    <option key={weapon} value={weapon}>
-      {weapon}
-    </option>
-  ))}
-</select>
-  </div>
-
-  <div>
-    <label className="block mb-2 font-bold">装飾</label>
-    <select
-      className="border rounded px-2 py-1 mb-4"
-      value={selectedAccessory}
-      onChange={(e) => setSelectedAccessory(e.target.value as keyof typeof ACCESSORY_BONUSES | "未選択")}
-    >
-      <option value="未選択">選択してください</option>
-      {Object.keys(ACCESSORY_BONUSES).map((acc) => (
-        <option key={acc} value={acc}>
-          {acc}
-        </option>
-      ))}
-    </select>
-  </div>
-</div>
+          <div>
+            <label className="block mb-2 font-bold">装飾</label>
+            <select
+              className="w-full border rounded px-2 py-1 mb-4"
+              value={selectedAccessory}
+              onChange={(e) => setSelectedAccessory(e.target.value as keyof typeof ACCESSORY_BONUSES | "未選択")}
+            >
+              <option value="未選択">選択してください</option>
+              {Object.keys(ACCESSORY_BONUSES).map((acc) => (
+                <option key={acc} value={acc}>
+                  {acc}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
 
         {/* 数値系ステータス */}
-          <table className="table-auto w-full border mt-8">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border px-2 py-1">能力</th>
-                <th className="border px-2 py-1">火力</th>
-                <th className="border px-2 py-1">射程</th>
-                <th className="border px-2 py-1">範囲</th>
-                <th className="border px-2 py-1">機動</th>
-                <th className="border px-2 py-1">耐久</th>
-                <th className="border px-2 py-1">反応</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
+        <table className="table-auto w-full border mt-8">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border px-2 py-1">能力</th>
+              <th className="border px-2 py-1">火力</th>
+              <th className="border px-2 py-1">射程</th>
+              <th className="border px-2 py-1">範囲</th>
+              <th className="border px-2 py-1">機動</th>
+              <th className="border px-2 py-1">耐久</th>
+              <th className="border px-2 py-1">反応</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
               <td className="border px-2 py-1">成長回数</td>
-                {growthKeys.map((key) => (
-                  <td key={key} className="border px-2 py-1">
-                    <input
-                      type="number"
-                      name={key}
-                      value={growth[key]}
-                      onChange={handleGrowthChange}
-                      className="w-full border px-1 py-0.5 rounded"
-                      step="1"
-                      min="0"
-                      inputMode="numeric"
-                    />
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="border px-2 py-1">合計値</td>
-                <td className="border px-2 py-1">{totalStats.power}</td>
-                <td className="border px-2 py-1">{totalStats.range}</td>
-                <td className="border px-2 py-1">{totalStats.area}</td>
-                <td className="border px-2 py-1">{totalStats.mobility}</td>
-                <td className="border px-2 py-1">{totalStats.durability}</td>
-                <td className="border px-2 py-1">{totalStats.reaction}</td>
-              </tr>
-            </tbody>
-          </table>
+              {growthKeys.map((key) => (
+                <td key={key} className="border px-2 py-1">
+                  <input
+                    type="number"
+                    name={key}
+                    value={growth[key]}
+                    onChange={handleGrowthChange}
+                    className="w-full border px-1 py-0.5 rounded"
+                    step="1"
+                    min="0"
+                    inputMode="numeric"
+                  />
+                </td>
+              ))}
+            </tr>
+            <tr>
+              <td className="border px-2 py-1">合計値</td>
+              <td className="border px-2 py-1">{totalStats.power}</td>
+              <td className="border px-2 py-1">{totalStats.range}</td>
+              <td className="border px-2 py-1">{totalStats.area}</td>
+              <td className="border px-2 py-1">{totalStats.mobility}</td>
+              <td className="border px-2 py-1">{totalStats.durability}</td>
+              <td className="border px-2 py-1">{totalStats.reaction}</td>
+            </tr>
+          </tbody>
+        </table>
 
         {/* スキル */}
         <div className="space-y-4">
@@ -950,124 +950,124 @@ const handleGenerateTokenAndCopy = () => {
             </select>
           </div>
 
-        <div>
-          <label className="block mb-1">戦闘スキル</label>
-          <div className="flex flex-wrap gap-2">
-            {battleSkills.map((skill, idx) => (
-              <select
-                key={idx}
-                value={skill}
-                onChange={(e) => handleMultiSkillChange(idx, e.target.value, setBattleSkills, battleSkills)}
-                className="p-2 border rounded"
-              >
-                <option value="">選択してください</option>
-                {battleSkillOptions.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            ))}
+          <div>
+            <label className="block mb-1">戦闘スキル</label>
+            <div className="flex flex-wrap gap-2">
+              {battleSkills.map((skill, idx) => (
+                <select
+                  key={idx}
+                  value={skill}
+                  onChange={(e) => handleMultiSkillChange(idx, e.target.value, setBattleSkills, battleSkills)}
+                  className="p-2 border rounded"
+                >
+                  <option value="">選択してください</option>
+                  {battleSkillOptions.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block mb-1">調査スキル</label>
+            <div className="flex flex-wrap gap-2">
+              {searchSkills.map((skill, idx) => (
+                <select
+                  key={idx}
+                  value={skill}
+                  onChange={(e) => handleMultiSkillChange(idx, e.target.value, setSearchSkills, searchSkills)}
+                  className="p-2 border rounded"
+                >
+                  <option value="">選択してください</option>
+                  {searchSkillOptions.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="block mb-1">上位スキル</label>
+            <div className="flex flex-wrap gap-2">
+              {advancedSkills.map((skill, idx) => (
+                <select
+                  key={idx}
+                  value={skill}
+                  onChange={(e) => handleMultiSkillChange(idx, e.target.value, setAdvancedSkills, advancedSkills)}
+                  className="w-full p-2 border rounded"
+                >
+                  <option value="">選択してください</option>
+                  {advancedSkillOptions.map((option) => (
+                    <option key={option} value={option}>{option}</option>
+                  ))}
+                </select>
+              ))}
+            </div>
           </div>
         </div>
 
+        {/* アイテム */}
         <div>
-          <label className="block mb-1">調査スキル</label>
-          <div className="flex flex-wrap gap-2">
-            {searchSkills.map((skill, idx) => (
-              <select
-                key={idx}
-                value={skill}
-                onChange={(e) => handleMultiSkillChange(idx, e.target.value, setSearchSkills, searchSkills)}
-                className="p-2 border rounded"
-              >
-                <option value="">選択してください</option>
-                {searchSkillOptions.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            ))}
-          </div>
-        </div>
-
-      <div>
-        <label className="block mb-1">上位スキル</label>
-        <div className="flex flex-wrap gap-2">
-          {advancedSkills.map((skill, idx) => (
+          <label className="block mb-1">アイテム</label>
+          {items.map((item, idx) => (
             <select
               key={idx}
-              value={skill}
-              onChange={(e) => handleMultiSkillChange(idx, e.target.value, setAdvancedSkills, advancedSkills)}
-              className="p-2 border rounded"
+              value={item}
+              onChange={(e) => handleItemChange(idx, e.target.value)}
+              className="w-full p-2 border rounded"
             >
               <option value="">選択してください</option>
-              {advancedSkillOptions.map((option) => (
+              {itemOptions.map((option) => (
                 <option key={option} value={option}>{option}</option>
               ))}
             </select>
           ))}
         </div>
-      </div>
-      </div>
 
-        {/* アイテム */}
-        <div>
-          <label className="block mb-1">アイテム</label>
-            {items.map((item, idx) => (
-              <select
-                key={idx}
-                value={item}
-                onChange={(e) => handleItemChange(idx, e.target.value)}
-                className="p-2 border rounded"
-              >
-                <option value="">選択してください</option>
-                {itemOptions.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            ))}
-        </div>
-      </div>
+        <label className="block mb-2 font-bold">キャラクター設定メモ</label>
+        {form.memos.map((memo, idx) => (
+          <div key={idx} className="mb-4 border rounded p-2 relative">
+            <button
+              className="absolute top-1 right-1 text-red-600 hover:text-red-800 font-bold"
+              onClick={() => {
+                const confirmed = window.confirm(`「${memo.title || "無題のメモ"}」を削除しますか？`);
+                if (confirmed) {
+                  const newMemos = form.memos.filter((_, i) => i !== idx);
+                  setForm({ ...form, memos: newMemos });
+                }
+              }}
+            >
+              ×
+            </button>
 
-      <label className="block mb-2 font-bold">キャラクター設定メモ</label>
-      {form.memos.map((memo, idx) => (
-        <div key={idx} className="mb-4 border rounded p-2 relative">
-          <button
-            className="absolute top-1 right-1 text-red-600 hover:text-red-800 font-bold"
-            onClick={() => {
-              const confirmed = window.confirm(`「${memo.title || "無題のメモ"}」を削除しますか？`);
-              if (confirmed) {
-                const newMemos = form.memos.filter((_, i) => i !== idx);
+            <input
+              type="text"
+              className="w-full border rounded p-1 mb-1"
+              placeholder="メモのタイトル"
+              value={memo.title}
+              onChange={(e) => {
+                const newMemos = [...form.memos];
+                newMemos[idx].title = e.target.value;
                 setForm({ ...form, memos: newMemos });
-              }
-            }}
-          >
-            ×
-          </button>
-
-          <input
-            type="text"
-            className="w-full border rounded p-1 mb-1"
-            placeholder="メモのタイトル"
-            value={memo.title}
-            onChange={(e) => {
-              const newMemos = [...form.memos];
-              newMemos[idx].title = e.target.value;
-              setForm({ ...form, memos: newMemos });
-            }}
-          />
-          <textarea
-            className="w-full border rounded p-2 h-24 resize-y"
-            placeholder="メモ内容を記入"
-            value={memo.content}
-            onChange={(e) => {
-              const newMemos = [...form.memos];
-              newMemos[idx].content = e.target.value;
-              setForm({ ...form, memos: newMemos });
-            }}
-          />
+              }}
+            />
+            <textarea
+              className="w-full border rounded p-2 h-24 resize-y"
+              placeholder="メモ内容を記入"
+              value={memo.content}
+              onChange={(e) => {
+                const newMemos = [...form.memos];
+                newMemos[idx].content = e.target.value;
+                setForm({ ...form, memos: newMemos });
+              }}
+            />
+          </div>
+        ))}
         </div>
-      ))}
+      </div>
     </main>
-    </div>
-
-    </div>);
+  </div>
+);
 }
