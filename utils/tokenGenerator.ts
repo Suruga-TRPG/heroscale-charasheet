@@ -6,6 +6,7 @@ interface CharacterData {
     name: string;
     fate: string;
     alias: string;
+    initSkill: string;
   };
   totalStats: {
     power: number;
@@ -264,7 +265,8 @@ const commonCommands: string[] = [
 
 // メイン関数：ココフォリア用トークンデータを生成してクリップボードにコピー
 export const copyTokenToClipboard = (characterData: CharacterData): void => {
-  const { form, totalStats, selectedBattleSkills, selectedSurveySkills, selectedUpperSkills } = characterData;
+  const { form, totalStats, selectedBattleSkills, selectedSurveySkills, selectedUpperSkills} = characterData;
+  const { initSkill } = form;
   
   const fateValue = fateTable[form.fate] ?? 0;
   const status: any[] = [];
@@ -347,6 +349,7 @@ export const copyTokenToClipboard = (characterData: CharacterData): void => {
 
   // スキルを追加
   const allSkills = [
+    ...(characterData.form.initSkill ? [characterData.form.initSkill] : []), 
     ...(selectedBattleSkills ?? []),
     ...(selectedSurveySkills ?? []),
     ...(selectedUpperSkills ?? []),

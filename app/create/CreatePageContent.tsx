@@ -291,6 +291,8 @@ const handleGenerateTokenAndCopy = () => {
       name: form.name,
       fate: form.fate,
       alias: form.alias,
+      initSkill: form.initSkill,
+
     },
     totalStats,
     selectedBattleSkills,
@@ -453,7 +455,7 @@ return (
         <label className="block mb-2 font-bold">経験点</label>
         <input
           type="number"
-          className="w-full border rounded px-2 py-1 mb-2"
+          className="border rounded px-2 py-1 mb-2"
           value={form.exp}
           onChange={(e) => setForm({ ...form, exp: parseInt(e.target.value || "0") })}
         />
@@ -600,7 +602,7 @@ return (
               name="initSkill"
               value={form.initSkill}
               onChange={handleChange}
-              className="p-2 border rounded w-full"
+              className="p-2 border rounded"
             >
               <option value="">選択してください</option>
               <optgroup label="≪戦闘スキル≫">
@@ -666,7 +668,7 @@ return (
                   key={idx}
                   value={skill}
                   onChange={(e) => handleMultiSkillChange(idx, e.target.value, setAdvancedSkills, advancedSkills)}
-                  className="w-full p-2 border rounded"
+                  className="p-2 border rounded"
                 >
                   <option value="">選択してください</option>
                   {advancedSkillOptions.map((option) => (
@@ -686,7 +688,7 @@ return (
               key={idx}
               value={item}
               onChange={(e) => handleItemChange(idx, e.target.value)}
-              className="w-full p-2 border rounded"
+              className="p-2 border rounded"
             >
               <option value="">選択してください</option>
               {itemOptions.map((option) => (
