@@ -38,9 +38,8 @@ export default function Home() {
       <h1 className="text-4xl font-bold mb-2">英雄の尺度～Hero Scale～</h1>
       <h2 className="text-xl text-gray-700 mb-6">キャラクターシート保管庫</h2>
 
-      {/* β版注意文 */}
       <p className="text-sm text-red-600 mb-4">
-        ※このサイトはβ版です。仕様は予告なく変更される場合があります。
+        ※Googleログインをしないとキャラクターシートの保存はできません
       </p>
 
       {/* ログイン情報 */}
@@ -89,7 +88,7 @@ export default function Home() {
 
         {showTerms && (
           <div className="border rounded p-4 max-h-96 overflow-y-scroll bg-white text-sm whitespace-pre-wrap leading-relaxed shadow">
-{`英雄の尺度キャラクターシート保管庫 利用規約（β版）
+{`英雄の尺度キャラクターシート保管庫 利用規約
 
 第1条（適用）
 1. 本規約は、本サービスの提供条件および利用に関する一切の関係に適用されます。
@@ -97,12 +96,17 @@ export default function Home() {
 
 第2条（サービス概要）
 1. 本サービスは、TRPG「英雄の尺度」におけるキャラクターシートの作成・保存・共有を目的としたWebサービスです。
-2. 本サービスはβ版として公開されており、予告なく仕様の変更、データの削除、提供の中断・終了が行われる場合があります。
+2. 本サービスは予告なく仕様の変更、データの削除、提供の中断・終了が行われる場合があります。
 
 第3条（著作権および投稿データ）
 1. 利用者が本サービスに投稿または保存したキャラクター情報やメモ等のデータは、当該利用者に著作権が帰属します。
 2. 利用者は、他者の著作権・肖像権・プライバシー権を侵害するデータを投稿してはなりません。
 3. 管理者は、運営上必要と判断した場合、データの削除・非公開化を行うことがあります。
+4. 利用者がアップロードする画像等のファイルは、利用者自身が著作権を保有するもの、または著作権者の許諾を得たフリー素材・商用利用可能素材等に限ります。
+5. 利用者が著作権違反素材をアップロードしたことにより発生した一切のトラブル・損害・紛争については、当該利用者が責任を負うものとし、運営者は一切の責任を負いません。
+6. 本サービス上では、アップロードされた画像に対してウォーターマーク・解像度制限などの加工を施し表示する場合があります。
+7. キャラクター駒出力機能等においては、アップロードされた元画像が利用される場合がありますが、これらの利用範囲についても利用者が著作権等の問題を解決していることを前提とします。
+8. アップロードされた画像が著作権違反素材であるとの申し立てを受けた場合、運営者は当該画像の確認を行い、必要に応じて速やかに削除その他の対応を行います。
 
 第4条（禁止事項）
 以下の行為を禁止します：
@@ -112,6 +116,9 @@ export default function Home() {
 - 本サービスの運営を妨げる行為
 - 営利目的での不正使用
 - キャラクターシートの自動収集・解析などの不正アクセス行為
+
+【上記の禁止行為に違反した場合、運営者は予告なく当該アカウントの停止・削除、または当該データの削除・非公開化などの措置を行うことができるものとします。】
+
 
 第5条（免責事項）
 1. 本サービスは無保証で提供されます。
@@ -124,12 +131,6 @@ export default function Home() {
 
 第7条（準拠法と管轄）
 本規約は日本法を準拠法とし、本サービスに関連する一切の紛争は、運営者の指定する日本国内の裁判所を第一審の専属的合意管轄裁判所とします。
-
-第8条（Googleログインおよび個人情報の取扱い）
-1. 本サービスでは、Googleアカウントを利用したログイン機能（Firebase Authentication）を提供しています。
-2. ログイン時には、Googleアカウントの「ユーザーID」と「表示名」のみを取得します。これらはキャラクターシートの保存・参照に使用されます。
-3. 取得した情報は、利用者本人の識別と機能提供のためにのみ使用され、外部へ提供することはありません。
-4. Firebaseのプライバシーポリシー（https://firebase.google.com/support/privacy）にも準拠します。
 `}
           </div>
         )}
@@ -146,7 +147,7 @@ export default function Home() {
 
         {showPrivacy && (
           <div className="border rounded p-4 max-h-96 overflow-y-scroll bg-white text-sm whitespace-pre-wrap leading-relaxed shadow">
-{`プライバシーポリシー（β版）
+{`プライバシーポリシー
 
 「英雄の尺度キャラクターシート保管庫」（以下、「本サービス」）では、利用者のプライバシーを尊重し、個人情報の保護に最大限の注意を払っています。以下に、本サービスにおける個人情報の取扱いについて定めます。
 
@@ -197,7 +198,7 @@ https://firebase.google.com/support/privacy
   <div className="flex flex-col md:flex-row justify-center items-center gap-6 max-w-4xl mx-auto">
     
     {/* Xボタン */}
-    <Link href="https://x.com/Surugamo_TRPG" target="_blank" className="w-60">
+    <Link href="https://x.com/Hero_Scale_CS" target="_blank" className="w-60">
       <div className="bg-black text-white rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col items-center">
         <img src="/x-logo.png" alt="X" className="w-16 h-16 object-contain mb-2" />
         <h3 className="font-semibold text-lg mb-1">X</h3>
