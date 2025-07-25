@@ -5,9 +5,10 @@ import { useParams, useRouter } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import CharacterDisplay from "@/components/CharacterDisplay";
+import { copyTokenToClipboard } from "@/utils/tokenGenerator";
 
 export default function CharacterPage() {
-  const router = useRouter(); // ✅ 関数内に記述！
+  const router = useRouter();
   const { id } = useParams();
   const [character, setCharacter] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
@@ -31,6 +32,17 @@ export default function CharacterPage() {
     fetchCharacter();
   }, [id]);
 
+  // 駒出力関数（シンプルに）
+  const handleGenerateTokenAndCopy = () => {
+    if (!character) {
+      alert("キャラクターデータが読み込まれていません");
+      return;
+    }
+
+    // ユーティリティ関数を使用
+    copyTokenToClipboard(character);
+  };
+
   if (loading) return <p className="p-4">読み込み中...</p>;
 
   return (
@@ -50,6 +62,13 @@ export default function CharacterPage() {
         </button>
 
         <button
+          onClick={handleGenerateTokenAndCopy}
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+        >
+          CCFOLIA駒出力
+        </button>
+
+        <button
           onClick={async () => {
             try {
               await navigator.clipboard.writeText(window.location.href);
@@ -58,7 +77,7 @@ export default function CharacterPage() {
               alert("コピーに失敗しました");
             }
           }}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
         >
           共有リンクをコピー
         </button>
