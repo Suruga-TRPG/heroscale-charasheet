@@ -17,4 +17,5 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 const db = getFirestore(app);
 
-export { auth, provider, db };
+// ✅ app を export に追加
+export { app, auth, provider, db };

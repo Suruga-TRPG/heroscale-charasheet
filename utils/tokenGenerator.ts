@@ -257,6 +257,7 @@ const commonCommands: string[] = [
   ":耐久-",
   ":運命-1",
   ":達成値=",
+  ":initiative=",
   "C({達成値}*{射程}) 命中値",
   "C({達成値}*{火力}) 破壊値",
   "C({達成値}*{機動}) 回避値",
@@ -272,16 +273,17 @@ export const copyTokenToClipboard = (characterData: CharacterData): void => {
   const status: any[] = [];
 
   // 基本ステータスを追加
-  status.push({
-    label: "運命",
-    value: fateValue,
-    max: fateValue,
-  });
-
+  
   status.push({
     label: "耐久",
     value: totalStats.durability,
     max: totalStats.durability,
+  });
+
+    status.push({
+    label: "運命",
+    value: fateValue,
+    max: fateValue,
   });
 
   // 仮称があれば追加
@@ -391,7 +393,7 @@ export const copyTokenToClipboard = (characterData: CharacterData): void => {
       initiative: 0,
       status,
       params,
-      iconUrl: "",
+      iconUrl:"",
       commands,
     },
   };

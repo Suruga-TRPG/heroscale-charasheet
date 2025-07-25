@@ -8,13 +8,52 @@ import { auth } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import Sidebar from "@/components/Sidebar";
 import { copyTokenToClipboard } from "@/utils/tokenGenerator";
+import { uploadImageFile } from "@/lib/uploadImage";
+import { getStorage, ref, deleteObject } from "firebase/storage";
+import { convertToRasterizedWatermarkedImage } from "@/lib/imageProcessor";
 
 export default function CreatePageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const characterId = searchParams.get("id");
+  const [isAgreed, setIsAgreed] = useState(false);
+
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [svgDataUrl, setSvgDataUrl] = useState<string | null>(null);
 
 
+const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  if (!auth.currentUser) {
+    alert("ログインが必要です");
+    return;
+  }
+
+  if (!isAgreed) {
+    alert("アップロードするには著作権同意チェックが必要です。");
+    return;
+  }
+
+  setUploading(true);
+
+ try {
+    // ② ウォーターマーク付き画像の生成とアップロード
+    const processedBlob = await convertToRasterizedWatermarkedImage(file);
+    const processedFile = new File([processedBlob], file.name, { type: "image/png" });
+    const watermarkedUrl = await uploadImageFile(processedFile, auth.currentUser.uid, file.name);
+
+    // 状態に保存
+    setImageUrl(watermarkedUrl); 
+  } catch (error) {
+    console.error("アップロード失敗", error);
+    alert("アップロードに失敗しました");
+  }
+
+  setUploading(false);
+};
   
   const [generatedTokenJson, setGeneratedTokenJson] = useState("");
   const [showTokenJson, setShowTokenJson] = useState(false);
@@ -225,6 +264,7 @@ const saveCharacterSheet = async () => {
     totalStats,
     remainingExp,
     userId: user.uid,
+    imageUrl: imageUrl,
     updatedAt: Timestamp.now(),
     createdAt: Timestamp.now()
   };
@@ -411,6 +451,7 @@ const handleGenerateTokenAndCopy = () => {
       setBattleSkills((data.selectedBattleSkills || []).concat([""]));
       setAdvancedSkills((data.selectedUpperSkills || []).concat([""]));
       setItems((data.selectedItems || []).concat([""]));
+      setImageUrl(data.imageUrl || "");
     }
   };
 
@@ -449,6 +490,48 @@ return (
           <input name="name" value={form.name} onChange={handleChange} placeholder="PC名" className="w-full p-2 border rounded" />
           <input name="gender" value={form.gender} onChange={handleChange} placeholder="性別" className="w-full p-2 border rounded" />
           <input name="age" value={form.age} onChange={handleChange} placeholder="年齢" className="w-full p-2 border rounded" />
+        </div>
+
+        <div className="w-full">
+          <label className="block border-black mb-2 font-semibold">キャラクター画像</label>
+
+          {/* 著作権同意チェック */}
+          <div className="mb-2">
+            <label className="inline-flex items-center">
+              <input
+                type="checkbox"
+                className="mr-2"
+                checked={isAgreed}
+                onChange={(e) => setIsAgreed(e.target.checked)}
+              />
+              <span className="text-sm text-gray-800">
+                私は著作権を侵害していない画像のみをアップロードします
+              </span>
+            </label>
+          </div>
+
+          {/* ファイル選択ボタン */}
+          <div className="flex items-center gap-4">
+            <label className="inline-block border border-black px-4 py-2 rounded cursor-pointer bg-gray-100 hover:bg-gray-200">
+              ファイルを選択
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+            </label>
+          </div>
+
+          {uploading && <p className="text-sm text-gray-500 mt-2">アップロード中...</p>}
+
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              alt="ウォーターマーク付き画像"
+              className="mt-4 max-h-64 rounded shadow"
+            />
+          )}
         </div>
 
         {/* 経験点 */}
