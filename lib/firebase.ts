@@ -4,12 +4,12 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAr-5PMxZTeZ60pVlAmW39OQAFIRtP3w0A",
-  authDomain: "hero-scale-cs.firebaseapp.com",
-  projectId: "hero-scale-cs",
-  storageBucket: "hero-scale-cs.firebasestorage.app",
-  messagingSenderId: "444576253763",
-  appId: "1:444576253763:web:7b7ba1fc2d4cd9f29091f6"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN!,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET!,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID!,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
 };
 
 const app = initializeApp(firebaseConfig);
