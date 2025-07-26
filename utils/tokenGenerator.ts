@@ -7,6 +7,7 @@ interface CharacterData {
     fate: string;
     alias: string;
     initSkill: string;
+    fateboost?: number;
   };
   totalStats: {
     power: number;
@@ -269,7 +270,13 @@ export const copyTokenToClipboard = (characterData: CharacterData): void => {
   const { form, totalStats, selectedBattleSkills, selectedSurveySkills, selectedUpperSkills} = characterData;
   const { initSkill } = form;
   
-  const fateValue = fateTable[form.fate] ?? 0;
+  const baseFateValue = fateTable[form.fate] ?? 0;
+  const fateBoost = (form as any).fateboost ?? 0;
+
+  const fateValue = 
+    baseFateValue === 999 || fateBoost === 0 
+      ? baseFateValue 
+      : baseFateValue + fateBoost;
   const status: any[] = [];
 
   // 基本ステータスを追加
