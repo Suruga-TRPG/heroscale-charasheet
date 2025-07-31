@@ -2,6 +2,7 @@
 
 // 型定義
 interface CharacterData {
+  id?: string;
   form: {
     name: string;
     fate: string;
@@ -392,18 +393,19 @@ export const copyTokenToClipboard = (characterData: CharacterData): void => {
   ].join("\n");
 
   // トークンデータを構築
-  const tokenData = {
-    kind: "character",
-    data: {
-      name: form.name || "名前なし",
-      memo: "",
-      initiative: 0,
-      status,
-      params,
-      iconUrl:"",
-      commands,
-    },
-  };
+    const tokenData = {
+      kind: "character",
+      data: {
+        name: form.name || "名前なし",
+        memo: "",
+        initiative: 0,
+        status,
+        params,
+        iconUrl: "",
+        commands,
+        externalUrl: `https://heroscale-charasheet.vercel.app/character/${characterData.id ?? ""}`, // ★ここを追加
+      },
+    };
 
   // JSONに変換してクリップボードにコピー
   const json = JSON.stringify(tokenData, null, 2);
