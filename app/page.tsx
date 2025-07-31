@@ -238,7 +238,7 @@ https://firebase.google.com/support/privacy
     </Link>
 
     <div className="fixed bottom-2 right-2 text-xs text-gray-500 pointer-events-none z-50">
-      ver.1.1.0 （2025/07/26 正式公開）
+      ver.1.1.1 （2025/07/31 更新）
     </div>
 
   </div>
