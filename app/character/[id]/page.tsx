@@ -23,7 +23,7 @@ export default function CharacterPage() {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        setCharacter(docSnap.data());
+        setCharacter({ id: docSnap.id, ...docSnap.data() });
       } else {
         setCharacter(null);
       }
