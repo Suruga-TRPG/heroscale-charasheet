@@ -21,7 +21,7 @@ const BONUS_CONSTANTS = {
     "家政":   { power: 1, range: 0, area: 1, mobility: 0, durability: 1000,reaction: 0 },
     "工匠":   { power: 0, range: 0, area: 1, mobility: 0, durability: 500, reaction: 1 },
     "芸家":   { power: 2, range: 1, area: 0, mobility: 0, durability: 0,   reaction: 0 },
-    "放浪":   { power: 0, range: 0, area: 0, mobility: 1, durability: 1000,reaction: 1 },
+    "放浪":   { power: 0, range: 0, area: 0, mobility: 1, durability: 1000,reaction: 0 },
     "学徒":   { power: 0, range: 1, area: 1, mobility: 0, durability: 500, reaction: 0 }
   } as const,
 
