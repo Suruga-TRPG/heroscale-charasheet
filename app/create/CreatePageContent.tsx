@@ -1,15 +1,18 @@
 'use client';
 
 import { useState, useEffect, useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { doc, getDoc, setDoc, collection, addDoc, Timestamp } from "firebase/firestore";
-import { db } from "@/firebase";
-import { auth } from "@/lib/firebase";
+import { db, auth } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import Sidebar from "@/components/Sidebar";
 import { copyTokenToClipboard } from "@/utils/tokenGenerator";
 import { uploadImageFile } from "@/lib/uploadImage";
 import { convertToRasterizedWatermarkedImage } from "@/lib/imageProcessor";
+
+type CreatePageContentProps = {
+  characterId?: string; // 編集時は id、作成時は undefined
+};
 
 // 定数の分離
 const BONUS_CONSTANTS = {
@@ -159,10 +162,8 @@ const calculateSkillCost = ({
   return totalCost;
 };
 
-export default function CreatePageContent() {
+export default function CreatePageContent({ characterId }: CreatePageContentProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const characterId = searchParams.get("id");
   
   // UI状態
   const [isAgreed, setIsAgreed] = useState(false);
@@ -444,6 +445,8 @@ export default function CreatePageContent() {
             });
           }
         }}
+        characterId={characterId} 
+        characterName={form.name || "名前未設定"}
       />
       
       <main className="flex-1 flex justify-center min-h-screen p-6 overflow-auto bg-white">

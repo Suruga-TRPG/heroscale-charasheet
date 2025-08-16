@@ -1,14 +1,26 @@
+"use client";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import DuplicateButton from "@/components/DuplicateButton";
 
 type Props = {
   onSave: () => void;
   onExport: () => void;
   onAddMemo: () => void;
   user: any;
+  characterId?: string; 
+  characterName?: string;
 };
 
-export default function Sidebar({ onSave, onExport, onAddMemo, user }: Props) {
+export default function Sidebar({
+  onSave,
+  onExport,
+  onAddMemo,
+  user,
+  characterId,
+  characterName,
+}: Props) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,10 +40,14 @@ export default function Sidebar({ onSave, onExport, onAddMemo, user }: Props) {
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <p></p>
-        <p></p>
-        <p></p>
-        <button onClick={() => router.push("/")} className="px-4 py-2 bg-gray-500 text-white rounded">
+        <p />
+        <p />
+        <p />
+
+        <button
+          onClick={() => router.push("/")}
+          className="px-4 py-2 bg-gray-500 text-white rounded"
+        >
           ホームに戻る
         </button>
 
@@ -55,6 +71,16 @@ export default function Sidebar({ onSave, onExport, onAddMemo, user }: Props) {
         >
           キャラクターを保存する
         </button>
+
+        {characterId && (
+          <div className="mt-1">
+            <DuplicateButton
+              characterId={characterId}
+              newName={`${characterName ?? "名前未設定"}のコピー`}
+              variant="sidebar"   
+            />
+          </div>
+        )}
 
         <button
           onClick={onExport}

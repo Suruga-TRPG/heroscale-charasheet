@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { auth, provider } from "@/lib/firebase";
 import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import CodeModal from "@/components/CodeModal";
 
 export default function Home() {
   const [user, setUser] = useState<any>(null);
@@ -76,6 +77,11 @@ export default function Home() {
       >
         マイページへ
       </Link>
+
+      <CodeModal trigger={(open)=>(
+            <button onClick={open} className="border rounded-lg px-4 py-2">特典コードを入力</button>
+          )}/>
+          
 
            {/* 利用規約 折りたたみボックス */}
       <div className="mt-8 w-full max-w-3xl text-left">
@@ -238,7 +244,7 @@ https://firebase.google.com/support/privacy
     </Link>
 
     <div className="fixed bottom-2 right-2 text-xs text-gray-500 pointer-events-none z-50">
-      ver.1.1.2 （2025/08/08 更新）
+      ver.1.2.0 （2025/08/16 更新）
     </div>
 
   </div>

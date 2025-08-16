@@ -7,6 +7,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { deleteDoc, doc } from "firebase/firestore";
+import CodeModal from "@/components/CodeModal";
+import DuplicateButton from "@/components/DuplicateButton";
 
 export default function MyPage() {
   const [user, setUser] = useState<any>(null);
@@ -68,6 +70,11 @@ export default function MyPage() {
     <main className="p-8 max-w-3xl mx-auto">
     <div className="flex items-center justify-between mb-4">
       <h1 className="text-2xl font-bold">マイキャラクター一覧</h1>
+          <CodeModal trigger={(open)=>(
+          <button onClick={open} className="border rounded-lg px-4 py-2">
+            特典コードを入力
+          </button>
+        )}/>    
       <button
         onClick={() => router.push("/")}
         className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
@@ -102,6 +109,11 @@ export default function MyPage() {
                 >
                 編集
                 </button>
+                
+                <DuplicateButton
+                  characterId={sheet.id}
+                  newName={`${sheet.name || "名前未設定"}のコピー`}
+                />
 
                 <button
                 className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"

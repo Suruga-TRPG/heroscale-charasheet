@@ -1,6 +1,8 @@
 // firebase.ts
 import { initializeApp, getApps } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { getFunctions } from "firebase/functions";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAr-5PMxZTeZ60pVlAmW39OQAFIRtP3w0A",
@@ -13,5 +15,7 @@ const firebaseConfig = {
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 const db = getFirestore(app);
+const auth = getAuth(app);
+const functions = getFunctions(app, "us-central1");
 
-export { db };
+export { db, auth, functions };
