@@ -228,6 +228,7 @@ const fateCommandTable: Record<string, string[]> = {
   ],
   "封印": [
     "1hs60 報い",
+    "1hs60,s,{封印値} 報い",
     "1hs60,s,{封印値} 封印の報い",
     ":封印値=",
   ],
