@@ -14,7 +14,7 @@ const robotoMono = Roboto_Mono({
 
 export const metadata = {
   title: "英雄の尺度 CS保管庫",
-  description: "英雄の尺度用キャラシート作成・保存サイト（β版）",
+  description: "英雄の尺度用キャラシート作成・保存サイト",
 };
 
 export default function RootLayout({
